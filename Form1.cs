@@ -135,10 +135,10 @@ namespace Course_Booker_9000
                     {
                         string createText = ""; //Create temporary string to save the outputs to, so saving to file can be completed with "File.WriteAllText" method.
                         for (int i = 0; i < _items.Count; i++)
-                        {
-                            createText += //Append all course details from all elements of the list of classes and save to a file.
-                                '"' + _items[i].CourseName + '"' + Environment.NewLine
-                                + '"' + _items[i].CourseID + '"' + Environment.NewLine
+                        {//Append all course details from all elements of the list of course class and save to a file.
+                            createText += 
+                                '"' + _items[i].CourseID.ToString() + '"' + Environment.NewLine //.ToString() method used for CourseID to prevent a bug of the ascii code of " being added to the CourseID integer.
+                                + '"' + _items[i].CourseName + '"' + Environment.NewLine
                                 + '"' + _items[i].CourseLevel + '"' + Environment.NewLine
                                 + '"' + _items[i].CourseDate + '"' + Environment.NewLine
                                 + '"' + _items[i].CoursePlaces + '"' + Environment.NewLine;
@@ -147,19 +147,19 @@ namespace Course_Booker_9000
                         MessageBox.Show("File has been saved to " + savePath); //Output confirmation to the user.
                     }
                     else
-                    {
-                        MessageBox.Show("Error: 001. Incorrect File Format. Original error: "); 
-                        //Output design specified error code message to the user if an exception was thrown by the program.
+                    {//Output design specified error code message to the user if the user attempts to save the file in an incorrect format.
+                        MessageBox.Show("Error: 001. Incorrect File Format."); 
+                        
                     }
                 }
                 catch (Exception ex)
-                {
-                    MessageBox.Show("Error: 001. File incorrect format or missing or dialog cancelled. Original error: " + ex.Message); //Output design specified error code message to the user if an exception was thrown by the program.
+                {//Output design specified error code message to the user if an exception was thrown by the program.
+                    MessageBox.Show("Error: 001. File incorrect format or missing or dialog cancelled. Original error: " + ex.Message); 
                 }
             }
-            else 
-            {
-                MessageBox.Show("Error: 003. File save error. Original error: Saving was aborted by user."); //Output design specified error code message to the user if saving was aborted.
+            else
+            {//Output design specified error code message to the user if saving was aborted.
+                MessageBox.Show("Error: 003. File save error. Original error: Saving was aborted by user."); 
             }
         }
     } //frmMain class ends here.
