@@ -8,7 +8,7 @@ namespace Course_Booker_9000
 {
     class Course
     {
-        private int _courseID;      //
+        private int _courseID;      
         private int _courseDate;
         private string _courseLevel;        
         private string _courseName;

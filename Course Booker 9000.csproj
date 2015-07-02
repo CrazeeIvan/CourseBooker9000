@@ -51,6 +51,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBookingSeatPlanner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBookingSeatPlanner.Designer.cs">
+      <DependentUpon>frmBookingSeatPlanner.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCourseManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBookingSeatPlanner.resx">
+      <DependentUpon>frmBookingSeatPlanner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCourseManager.resx">
       <DependentUpon>frmCourseManager.cs</DependentUpon>

@@ -14,72 +14,30 @@ namespace Course_Booker_9000
     public partial class frmMain : Form
     {
         List<Course> courseStorage = new List<Course>();
-
-        public static string[] readText;
-        List<string> courseNames = new List<string>(); 
-        List<Course> myCourseList = new List<Course>();
-        List<Course> _items = new List<Course>(); 
+        List<Course> _items = new List<Course>();
+        public static string[] tempLines; //temp string array for manipulating data before saving to the list.
 
 
         public frmMain()
         {
             InitializeComponent();
-            Course myTempCourse = new Course();
-          /*  Course myCourse = new Course();
-            int courseID = 0;
-            int courseDate = 0;
-            string courseLevel = "";
-            string courseName = "";
-            string coursePlaces = "FFFFFFFFFFFF";*/ 
         }
-
         private void tspExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            List<string> _courseNames = new List<string>(); //Create a new temp list of strings which is used to buffer the inputs from the textbox
-
-        }
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-
-            //Create a new temp list of strings which is used to buffer the inputs from the textbox before 
-            _items.Add(new Course(){CourseID = 100, CourseDate = 20201992, CourseLevel = "Advanced", CourseName="C++", CoursePlaces="BBBFFFBBBFFF"});
-            _items.Add(new Course(){CourseID = 99, CourseDate = 13061992, CourseLevel = "Beginner", CourseName="Java", CoursePlaces="BBBBBBFFFFFF"});
-            _items.Add(new Course(){CourseID = 98, CourseDate = 04041992, CourseLevel = "Intermediate", CourseName="Python", CoursePlaces="FFFBBBFFFBBB"});
-            lbxCourseWindow.Items.Clear(); //clear the listbox so we dont add to the list if open file is used more than once
-            for (int i=0;i<_items.Count;i++)
+            DialogResult m = MessageBox.Show("Are you sure you want to exit the Course Booker 9000?\nAny unsaved progress will be lost.", "Confirmation", MessageBoxButtons.YesNo);
+            if (m == DialogResult.Yes)
             {
-                lbxCourseWindow.Items.Add(_items[i].CourseName);
-            }
-
-            /*foreach (Int16 courseNames in _items.)
-            {
-                lbxCourseWindow.Items.Add(courseNames2); //add the course titles to the listbox
-            }
-
-            /* parts.Add(new Part() {PartName="crank arm", PartId=1234});
-            _items.Add("" + txtCourseName.Text); //Add these
-            _items.Add("" + txtDate.Text);
-            _items.Add("" + txtCost.Text);
-
-            lbxCourseWindow.DataSource = _items;
-            /*
-            // This text is added only once to the file. 
-            if (File.Exists(path))
-            {
-                MessageBox.Show("Error: File already exists!");
+                Application.Exit();
             }
             else
             {
-                // Create a file to write to. 
-                string createText = "";
-                createText += '"' + txtCourseName.Text + '"' + Environment.NewLine + '"' + txtDate.Text + '"' + Environment.NewLine + '"' + txtCost.Text + '"' + Environment.NewLine;
-                File.WriteAllText(path, createText, Encoding.UTF8);
-            }*/
+                //Does nothing if cancel is selected.
+            }
+        }
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            frmBookingSeatPlanner frm = new frmBookingSeatPlanner();
+            frm.Show();
         }
         private void tspOpen_Click(object sender, EventArgs e)
         {
@@ -89,46 +47,62 @@ namespace Course_Booker_9000
             openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = true;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                try
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    openPath = openFileDialog.FileName; //Set filepath to Filename selected by Open File Dialog
-                    readText = File.ReadAllLines(openPath);
-
-                    for (int i = 0; i < readText.Length; i += 4)
+                    openPath = openFileDialog.FileName; //Set filepath to Filename selected by the Open File Dialog.
+                    if (Path.GetExtension(openPath) == ".txt")
                     {
-                        //courseNames.Add(fileLines[i]);  //add just the course titles into courseNames list                
+                        List<string> courseNames = new List<string>();
+                        tempLines = File.ReadAllLines(openPath, Encoding.Default); //Copy the opened file into tempLines.
+                        for (int i = 0; i < tempLines.Length; i++)
+                        {
+                            tempLines[i] = tempLines[i].Trim('"'); //The trim method allows for the removal of a designated character from a string.
+                        }
+                        for (int i = 0; i < tempLines.Length; i += 5)
+                        {
+                            _items.Add(new Course() 
+                            {
+                                CourseID = Int32.Parse(tempLines[i]),
+                                CourseName = tempLines[i + 1],
+                                CourseLevel = tempLines[i + 2],
+                                CourseDate = Int32.Parse(tempLines[i + 3]),
+                                CoursePlaces = tempLines[i + 4]
+                            }
+                            );
+                            courseNames.Add(tempLines[i+1]);  //Add course names into the courseNames list.
+                        }
+                        lbxCourseWindow.Items.Clear(); //Clear listbox before adding to it, to ensure that we do not create duplicate entries.
+                        courseNames = courseNames.Distinct().ToList<String>(); //remove any duplicate course titles.
+                        lbxCourseWindow.DataSource = courseNames; //Populate the listbox with the courseNames list of strings.
                     }
-
-                    lbxCourseWindow.Items.Clear(); //clear the listbox so we dont add to the list if open file is used more than once
-
-                    foreach (string item in courseNames)
+                    else
                     {
-                        lbxCourseWindow.Items.Add(item); //add the course titles to the listbox
+                        MessageBox.Show("Error: 001. Incorrect File Format.");
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-
-
-                    MessageBox.Show("Error: 002. File open error or dialog cancelled. Original error: " + ex.Message);
+                    MessageBox.Show("Error: 003. File save error.\nOriginal error: Saving was aborted by user."); 
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: 002. File open error or dialog cancelled.\nOriginal error: " + ex.Message);
+            }
         }
-
         private void tspSave_Click(object sender, EventArgs e)
         {
-            
             SaveFileDialog dlgSaveFileDialog = new SaveFileDialog(); //Create a new instance of SaveFileDialog named dlgSaveFileDialog.
             string savePath; //Create a temporary string to store the path for saving the file.
             dlgSaveFileDialog.InitialDirectory = "d:\\";
             dlgSaveFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             dlgSaveFileDialog.FilterIndex = 2;
             dlgSaveFileDialog.RestoreDirectory = true;
-            if ((dlgSaveFileDialog.ShowDialog() == DialogResult.OK))
+            try
             {
-                try
+                if ((dlgSaveFileDialog.ShowDialog() == DialogResult.OK))
                 {
                     savePath = dlgSaveFileDialog.FileName; //Set filepath to Filename/path selected by Save File Dialog.
                     if (Path.GetExtension(savePath)==".txt")
@@ -143,23 +117,34 @@ namespace Course_Booker_9000
                                 + '"' + _items[i].CourseDate + '"' + Environment.NewLine
                                 + '"' + _items[i].CoursePlaces + '"' + Environment.NewLine;
                         }
-                        File.WriteAllText(savePath, createText, Encoding.UTF8);
+                        File.WriteAllText(savePath, createText, Encoding.UTF8); //File Creation is here.
                         MessageBox.Show("File has been saved to " + savePath); //Output confirmation to the user.
                     }
                     else
                     {//Output design specified error code message to the user if the user attempts to save the file in an incorrect format.
-                        MessageBox.Show("Error: 001. Incorrect File Format."); 
-                        
+                        MessageBox.Show("Error: 001. Incorrect File Format.");    
                     }
                 }
-                catch (Exception ex)
-                {//Output design specified error code message to the user if an exception was thrown by the program.
-                    MessageBox.Show("Error: 001. File incorrect format or missing or dialog cancelled. Original error: " + ex.Message); 
+                else
+                {//Output design specified error code message to the user if saving was aborted.
+                    MessageBox.Show("Error: 003. File save error.\nOriginal error: Saving was aborted by user."); 
                 }
             }
+            catch (Exception ex)
+            {//Output design specified error code message to the user if an exception was thrown by the program.
+                MessageBox.Show("Error: 001. File incorrect format or missing or dialog cancelled.\nOriginal error: " + ex.Message);
+            }
+        }
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult m = MessageBox.Show("Are you sure you want to exit the Course Booker 9000?\nAny unsaved progress will be lost.", "Confirmation", MessageBoxButtons.YesNo);
+            if (m == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
             else
-            {//Output design specified error code message to the user if saving was aborted.
-                MessageBox.Show("Error: 003. File save error. Original error: Saving was aborted by user."); 
+            {
+                //Does nothing if cancel is selected.
             }
         }
     } //frmMain class ends here.

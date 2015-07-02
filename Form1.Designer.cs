@@ -39,7 +39,8 @@
             this.lbxCourseWindow = new System.Windows.Forms.ListBox();
             this.txtDate = new System.Windows.Forms.TextBox();
             this.txtCost = new System.Windows.Forms.TextBox();
-            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.mnuFile.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,33 +62,33 @@
             this.tspSave,
             this.tspExit});
             this.tspFile.Name = "tspFile";
-            this.tspFile.Size = new System.Drawing.Size(94, 20);
+            this.tspFile.Size = new System.Drawing.Size(37, 20);
             this.tspFile.Text = "File";
             // 
             // tspNew
             // 
             this.tspNew.Name = "tspNew";
-            this.tspNew.Size = new System.Drawing.Size(152, 22);
+            this.tspNew.Size = new System.Drawing.Size(103, 22);
             this.tspNew.Text = "New";
             // 
             // tspOpen
             // 
             this.tspOpen.Name = "tspOpen";
-            this.tspOpen.Size = new System.Drawing.Size(152, 22);
+            this.tspOpen.Size = new System.Drawing.Size(103, 22);
             this.tspOpen.Text = "Open";
             this.tspOpen.Click += new System.EventHandler(this.tspOpen_Click);
             // 
             // tspSave
             // 
             this.tspSave.Name = "tspSave";
-            this.tspSave.Size = new System.Drawing.Size(152, 22);
+            this.tspSave.Size = new System.Drawing.Size(103, 22);
             this.tspSave.Text = "Save";
             this.tspSave.Click += new System.EventHandler(this.tspSave_Click);
             // 
             // tspExit
             // 
             this.tspExit.Name = "tspExit";
-            this.tspExit.Size = new System.Drawing.Size(152, 22);
+            this.tspExit.Size = new System.Drawing.Size(103, 22);
             this.tspExit.Text = "Exit";
             this.tspExit.Click += new System.EventHandler(this.tspExit_Click);
             // 
@@ -111,9 +112,9 @@
             // lbxCourseWindow
             // 
             this.lbxCourseWindow.FormattingEnabled = true;
-            this.lbxCourseWindow.Location = new System.Drawing.Point(12, 27);
+            this.lbxCourseWindow.Location = new System.Drawing.Point(12, 79);
             this.lbxCourseWindow.Name = "lbxCourseWindow";
-            this.lbxCourseWindow.Size = new System.Drawing.Size(312, 186);
+            this.lbxCourseWindow.Size = new System.Drawing.Size(312, 134);
             this.lbxCourseWindow.TabIndex = 7;
             // 
             // txtDate
@@ -130,22 +131,33 @@
             this.txtCost.Size = new System.Drawing.Size(100, 20);
             this.txtCost.TabIndex = 3;
             // 
-            // btnUpdate
+            // btnExit
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(224, 283);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(100, 23);
-            this.btnUpdate.TabIndex = 6;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.btnExit.Location = new System.Drawing.Point(224, 283);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(100, 23);
+            this.btnExit.TabIndex = 8;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Monotype Corsiva", 27.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(12, 24);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(279, 45);
+            this.lblTitle.TabIndex = 9;
+            this.lblTitle.Text = "Course Booker 9000";
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(463, 341);
-            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.lblTitle);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.txtCost);
             this.Controls.Add(this.txtDate);
             this.Controls.Add(this.lbxCourseWindow);
@@ -175,7 +187,8 @@
         private System.Windows.Forms.ListBox lbxCourseWindow;
         private System.Windows.Forms.TextBox txtDate;
         private System.Windows.Forms.TextBox txtCost;
-        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Label lblTitle;
     }
 }
 
